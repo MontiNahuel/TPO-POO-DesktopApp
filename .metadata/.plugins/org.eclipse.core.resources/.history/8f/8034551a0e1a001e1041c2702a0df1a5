@@ -1,0 +1,212 @@
+package user.pantallasVenta;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.lang.reflect.Array;
+import java.util.Iterator;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import controller.producto.ParProductoCantidad;
+import controller.producto.Producto;
+import controller.venta.Venta;
+import user.pantallasProducto.FPantallaInvalida;
+
+import javax.swing.JList;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class FAgregarVenta extends JDialog {
+
+	private final JPanel contentPanel = new JPanel();
+	private JTextField codigoTxt;
+	private static Object[] catalogoArray;
+	private static Venta venta;
+	private JList listProductos;
+	private JList listProductosEnCompra;
+	private JTextField cantidadTxt;
+	private JTextField cantidadSacarTxt;
+	private int total;
+	private JLabel valorLabel;
+	private static Object[] registro;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		try {
+			FAgregarVenta dialog = new FAgregarVenta(catalogoArray, registro, venta);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public FAgregarVenta(Object[] catalogo, Object[] registroVenta, Venta v) {
+		venta = v;
+		catalogoArray = catalogo;
+		registro = registroVenta;
+		setBounds(100, 100, 671, 447);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		contentPanel.setLayout(null);
+		
+		JList listProductos = new JList();
+		listProductos.setBounds(10, 81, 286, 217);
+		contentPanel.add(listProductos);
+		this.listProductos = listProductos;
+		listProductos.setListData(catalogoArray);
+		
+		JLabel lblNewLabel = new JLabel("Productos");
+		lblNewLabel.setBounds(10, 31, 236, 14);
+		contentPanel.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Venta");
+		lblNewLabel_1.setBounds(348, 31, 46, 14);
+		contentPanel.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Codigo:");
+		lblNewLabel_2.setBounds(348, 57, 46, 14);
+		contentPanel.add(lblNewLabel_2);
+		
+		codigoTxt = new JTextField();
+		codigoTxt.setBounds(404, 54, 86, 20);
+		contentPanel.add(codigoTxt);
+		codigoTxt.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Lista de Productos");
+		lblNewLabel_3.setBounds(348, 82, 211, 14);
+		contentPanel.add(lblNewLabel_3);
+		
+		JList listProductosEnCompra = new JList();
+		listProductosEnCompra.setBounds(348, 107, 286, 217);
+		contentPanel.add(listProductosEnCompra);
+		this.listProductosEnCompra = listProductosEnCompra;
+		
+		JButton agregarAVenta = new JButton("Agregar");
+		agregarAVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agregarAVenta();
+			}
+		});
+		agregarAVenta.setBounds(10, 341, 89, 23);
+		contentPanel.add(agregarAVenta);
+		
+		JButton btnQuitar = new JButton("Quitar");
+		btnQuitar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				quitarDeVenta();
+			}
+		});
+		btnQuitar.setBounds(545, 341, 89, 23);
+		contentPanel.add(btnQuitar);
+		
+		JLabel lblNewLabel_4 = new JLabel("Cantidad:");
+		lblNewLabel_4.setBounds(10, 316, 65, 14);
+		contentPanel.add(lblNewLabel_4);
+		
+		cantidadTxt = new JTextField();
+		cantidadTxt.setBounds(85, 313, 86, 20);
+		contentPanel.add(cantidadTxt);
+		cantidadTxt.setColumns(10);
+		
+		JLabel lblNewLabel_5 = new JLabel("Cantidad:");
+		lblNewLabel_5.setBounds(348, 345, 86, 14);
+		contentPanel.add(lblNewLabel_5);
+		
+		cantidadSacarTxt = new JTextField();
+		cantidadSacarTxt.setBounds(404, 342, 86, 20);
+		contentPanel.add(cantidadSacarTxt);
+		cantidadSacarTxt.setColumns(10);
+		
+		JLabel totalLabel = new JLabel("Total:" + total);
+		this.valorLabel = totalLabel;
+		totalLabel.setBounds(569, 57, 65, 14);
+		contentPanel.add(totalLabel);
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("Finalizar");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						aceptar();
+					}
+				});
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+			{
+				JButton cancelButton = new JButton("Cancelar");
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+			}
+		}
+	}
+	
+	// Methods
+	
+	private void agregarAVenta() {
+		Producto p = (Producto) listProductos.getSelectedValue();
+		if (p != null) {
+			p.agregarAVenta(venta, Integer.parseInt(cantidadTxt.getText()));
+			// Cambiar y que sea el producto que se agrega a la venta, sino no se actualiza la cantidad del producto
+			// Y crear un entorno de testeo donde ya esté precargado un producto
+			valorLabel.setText("Valor: " + venta.getPrecioVenta());
+			listProductosEnCompra.setListData(venta.getListaVenta().toArray());
+			listProductos.setListData(catalogoArray);
+		}
+	}
+	
+	private void quitarDeVenta() {
+		ParProductoCantidad par = (ParProductoCantidad) listProductosEnCompra.getSelectedValue();
+		if (par != null) {
+			for (Object o : catalogoArray) {
+				Producto producto = (Producto) o;
+				if (producto.getCodigo() == par.getCodigoProducto()) {
+					venta.quitarProducto(producto, Integer.parseInt(cantidadSacarTxt.getText()));
+				}
+			}
+		}
+		listProductosEnCompra.setListData(venta.getListaVenta().toArray());
+		listProductos.setListData(catalogoArray);
+	}
+	
+	private void aceptar() {
+		boolean existe = false;
+		for (Object object : registro) {
+			Venta venta = (Venta) object;
+			if (venta.getCodigoVenta() == Integer.parseInt(codigoTxt.getText())) {
+				existe = true;
+			}
+		}
+		if (!existe) {
+			venta.setCodigoVenta(Integer.parseInt(codigoTxt.getText())); // Cambiar para validar los ID
+			setVisible(false);
+		}else {
+			FPantallaInvalida pantallaCodigoInvalido = new FPantallaInvalida("El ID ingresado ya existe");
+			pantallaCodigoInvalido.setModal(true);
+			pantallaCodigoInvalido.setVisible(true);
+		}
+	}
+	
+	public Venta getVentaCreadaFinal() {
+		return venta;
+	}
+	
+	public int getCodigoVenta() {
+		return Integer.parseInt(codigoTxt.getText());
+	}
+}

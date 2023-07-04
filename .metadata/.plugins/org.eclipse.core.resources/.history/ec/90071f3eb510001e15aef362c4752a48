@@ -1,0 +1,34 @@
+package controller.venta;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class RegistroDeVentas {
+	List<Venta> registroVentas;
+	
+	public RegistroDeVentas() {
+		// TODO Auto-generated constructor stub
+		registroVentas = new ArrayList<>();
+	}
+	
+	public boolean registrarVenta(Venta v) {
+		boolean existe = false;
+		for (Venta venta : registroVentas) {
+			if (venta.getCodigoVenta() == v.getCodigoVenta()) {
+				existe = true;
+			}
+		}
+		if (!existe) {
+			registroVentas.add(v);
+		}
+		return !existe;
+	}
+	
+	public String listarVentas() {
+		String listado = "";
+		for (Venta venta : registroVentas) {
+			
+		}
+		return listado;
+	}
+}

@@ -1,0 +1,48 @@
+package controller.venta;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import controller.producto.ParProductoCantidad;
+import controller.producto.Producto;
+
+public class Venta {
+	protected int precioVenta;
+	protected int codigoVenta;
+	protected List<ParProductoCantidad> listaVenta;
+	
+	
+	// Constructor
+	public Venta() {
+		precioVenta = 0;
+		codigoVenta = 0; // Corregir
+		listaVenta = new ArrayList<>();
+	}
+	
+	// Getters
+	public int getCodigoVenta() { return codigoVenta; }
+	
+	// Methods
+	public void agregarProducto(Producto producto, int cantidad) {
+		
+		boolean flag = true;
+		for (ParProductoCantidad par : listaVenta) { // Primero veo si existe en la lista de la venta
+			if (par.getCodigoProducto() == producto.getCodigo()) {
+				par.setCantidad(par.getCantidad() + cantidad);
+				precioVenta =+ producto.getPrecioUnitario()*cantidad;
+				flag = false;
+			}
+		}
+		if (flag) { // Si no existe creo el par y lo agrego
+			ParProductoCantidad parProductoCantidad = new ParProductoCantidad(producto.getCodigo(), cantidad, producto.getNombre());
+			listaVenta.add(parProductoCantidad);
+			int precio = producto.getPrecioUnitario()*cantidad;
+			precioVenta =+ precio;
+		}
+	}
+	
+	public int calcularPrecioDeVenta() {
+		return precioVenta;
+	}
+	
+}

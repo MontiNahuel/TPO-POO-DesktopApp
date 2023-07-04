@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="user.FIngresarProducto"/>
+    <fullyQualifiedTypeName name="user.FIngresarProductoInvalido"/>
+    <fullyQualifiedTypeName name="java.text.ParseException"/>
+    <fullyQualifiedTypeName name="user.FEliminarProducto"/>
+    <fullyQualifiedTypeName name="user.FEliminarProductoInvalido"/>
+    <fullyQualifiedTypeName name="controller.producto.IEstadoProducto.EstadoConStock"/>
+    <fullyQualifiedTypeName name="controller.producto.IEstadoProducto.EstadoConStockMinimo"/>
+    <fullyQualifiedTypeName name="java.lang.reflect.Array"/>
+    <fullyQualifiedTypeName name="javax.management.remote.SubjectDelegationPermission"/>
+    <fullyQualifiedTypeName name="controller.producto.Producto"/>
+    <fullyQualifiedTypeName name="user.pantallasVenta.FElegirTipoDeVenta"/>
+    <fullyQualifiedTypeName name="controller.venta.VentaEfectivo"/>
+    <fullyQualifiedTypeName name="controller.venta.VentaCredito"/>
+    <fullyQualifiedTypeName name="user.pantallasVenta.FPantalla1Dato"/>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="user.pantallasVenta.FAgregarVenta"/>
+    <fullyQualifiedTypeName name="javax.swing.JList"/>
+    <fullyQualifiedTypeName name="java.time.Year"/>
+    <fullyQualifiedTypeName name="controller.venta.RegistroDeVentas"/>
+    <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+    <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="controller.venta.Venta"/>
+    <fullyQualifiedTypeName name="java.nio.file.FileAlreadyExistsException"/>
+    <fullyQualifiedTypeName name="user.pantallasProducto.FPantallaInvalida"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="controller.datos.Datos"/>
+    <fullyQualifiedTypeName name="controller.catalogo.CatalogoDeProductos"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
+</qualifiedTypeNameHistroy>
